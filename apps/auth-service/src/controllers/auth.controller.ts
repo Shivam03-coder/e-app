@@ -11,8 +11,11 @@ export class AuthController {
       AuthValidation.validateRegisterData(req.body, 'USER');
       const { name, email } = req.body;
       const existingUser = await db.users.findUnique({
-        where: {
-          email,
+        where: { email: email },
+        select: {
+          id: true,
+          name: true,
+          email: true,
         },
       });
 

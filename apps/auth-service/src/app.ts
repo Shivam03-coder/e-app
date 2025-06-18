@@ -37,8 +37,8 @@ class App {
     this.app.use(express.json({ limit: '100mb' }));
     this.app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
     this.app.use(cookieParser());
-    this.app.use(errorMiddleware);
     this.app.use('/api/auth', authRouter);
+    this.app.use(errorMiddleware);
   }
 
   private initializeRoutes(): void {
@@ -56,7 +56,6 @@ class App {
       this.server = this.app.listen(this.port, () => {
         console.log(`
 🚀 Auth Service launched successfully!
-📚 Swagger Docs available at: http://localhost:${this.port}/api-docs
       `);
         resolve();
       });

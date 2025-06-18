@@ -1,21 +1,21 @@
 import { PrismaClient } from '../../generated/prisma/index';
 
-function createExtendedPrismaClient() {
-  const prisma = new PrismaClient({
+const prismaClientSingleton = () => {
+  return new PrismaClient({
     log:
       process.env.NODE_ENV === 'development'
         ? ['query', 'info', 'warn', 'error']
         : ['error'],
   });
-
-  return prisma.$extends({});
-}
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof createExtendedPrismaClient> | undefined;
 };
 
-export const db = globalForPrisma.prisma ?? createExtendedPrismaClient();
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
+
+// Create or reuse instance
+export const db =
+  globalForPrisma.prisma ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = db;

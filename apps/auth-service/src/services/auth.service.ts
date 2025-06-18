@@ -57,6 +57,7 @@ class AuthServices {
 
   public static sendOtp = async (name: string, email: string) => {
     const otp = crypto.randomInt(1000, 9999).toString();
+    console.log("🚀 ~ AuthServices ~ sendOtp= ~ otp:", otp)
     redisClient.set(`otp:${email}`, otp, 300);
     redisClient.set(`otp_cooldown:${email}`, 'true', 60);
     await NodemailerService.sendOtpEmail({ email, otp, name });

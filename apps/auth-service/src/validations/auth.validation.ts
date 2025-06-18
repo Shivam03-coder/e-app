@@ -1,4 +1,4 @@
-import { ValidationError } from "@packages/error-middleware/error-classes";
+import { ValidationError } from '@packages/error-middleware/error-classes';
 
 export class AuthValidation {
   private static isEmailValid = (email: string): boolean => {
@@ -16,13 +16,12 @@ export class AuthValidation {
       !name ||
       !email ||
       !password ||
-      !phoneNumber ||
       (userType == 'SELLER' && (!phoneNumber || !country))
     ) {
       throw new ValidationError(`Missing or invalid value for field`);
     }
 
-    if (this.isEmailValid(email)) {
+    if (!this.isEmailValid(email)) {
       throw new ValidationError('Invalid email format.');
     }
   };

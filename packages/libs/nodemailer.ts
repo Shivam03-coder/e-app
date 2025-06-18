@@ -2,6 +2,8 @@ import nodemailer, { Transporter } from 'nodemailer';
 import dotenv from 'dotenv';
 import ejs from 'ejs';
 import path from 'path';
+import fs from 'fs';
+
 dotenv.config();
 
 class NodemailerService {
@@ -26,12 +28,22 @@ class NodemailerService {
     name: string;
   }): Promise<void> {
     try {
+
+      console.log(process.cwd())
+      // ✅ Fix template path relative to monorepo root
       const templatePath = path.join(
-        __dirname,
-        '..',
+        process.cwd(),
+        'packages',
         'templates',
         'otp-template.ejs'
       );
+
+      console.log('📩 Using template at:', templatePath);
+
+      if (!fs.existsSync(templatePath)) {
+        throw new Error(`Template not found at: ${templatePath}`);
+      }
+
       const html = await ejs.renderFile(templatePath, { name, otp });
 
       const mailOptions = {
@@ -49,4 +61,5 @@ class NodemailerService {
     }
   }
 }
+
 export default NodemailerService;
