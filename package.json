@@ -26,9 +26,7 @@
     "ioredis": "^5.6.1",
     "morgan": "^1.10.0",
     "nodemailer": "^7.0.3",
-    "prisma": "^6.9.0",
-    "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1"
+    "prisma": "^6.9.0"
   },
   "devDependencies": {
     "@nx/esbuild": "21.2.0",

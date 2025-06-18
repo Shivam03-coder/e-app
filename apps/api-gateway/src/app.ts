@@ -54,7 +54,12 @@ class App {
         status: 'healthy',
       });
     });
-    this.app.use('/', proxy('http://localhost:4000'));
+    this.app.use(
+      '/',
+      proxy('http://localhost:4000', {
+        proxyReqPathResolver: (req) => req.originalUrl,
+      })
+    );
   }
 
   public async listen(): Promise<void> {

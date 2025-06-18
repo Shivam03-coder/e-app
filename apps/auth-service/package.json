@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "swagger": "node src/swagger.ts",
     "dev": "tsx src/main.ts"
   },
   "nx": {

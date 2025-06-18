@@ -4,8 +4,8 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { Server } from 'http';
-import { errorMiddleware } from 'packages/error-middleware/error-middleware';
 import authRouter from './routes/auth.routes';
+import { errorMiddleware } from '@packages/error-middleware/error-middleware';
 
 interface AppOptions {
   port?: number;

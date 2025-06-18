@@ -1,12 +1,12 @@
-import express from 'express';
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 4000;
-const app = express();
+import App from './app';
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello Every One' });
-});
+const appInstance = new App();
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+(async () => {
+  try {
+    await appInstance.listen();
+  } catch (error) {
+    console.error('❌ Server startup failed:', error);
+    process.exit(1);
+  }
+})();

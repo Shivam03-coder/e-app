@@ -1,4 +1,4 @@
-import { ValidationError } from 'packages/error-middleware/error-classes';
+import { ValidationError } from "@packages/error-middleware/error-classes";
 
 export class AuthValidation {
   private static isEmailValid = (email: string): boolean => {

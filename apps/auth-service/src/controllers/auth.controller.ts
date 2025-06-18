@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { ApiResponse, AsyncHandler } from 'packages/utils/api.utils';
 import { AuthValidation } from '../validations/auth.validation';
-import { db } from 'packages/database';
-import { ValidationError } from 'packages/error-middleware/error-classes';
 import AuthServices from '../services/auth.service';
+import { ApiResponse, AsyncHandler } from '@packages/utils/api.utils';
+import { ValidationError } from '@packages/error-middleware/error-classes';
+import { db } from '@packages/database';
 
 export class AuthController {
   public static userRegistration = AsyncHandler(

@@ -3,11 +3,7 @@ import Redis from 'ioredis';
 class RedisService {
   private client: Redis;
   constructor() {
-    this.client = new Redis({
-      host: process.env.REDIS_HOST || '127.0.0.1',
-      port: Number(process.env.REDIS_PORT) || 6379,
-      password: process.env.REDIS_PASSWORD,
-    });
+    this.client = new Redis(process.env.REDIS_URL as string);
 
     this.client.on('connect', () => {
       console.log('Redis connected');
@@ -42,5 +38,5 @@ class RedisService {
   }
 }
 
-const redisService = new RedisService();
-export default redisService;
+const redisClient = new RedisService();
+export default redisClient;

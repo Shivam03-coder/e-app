@@ -22,6 +22,11 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "baseUrl": "."
+
+    // === Module Aliases ===
+    "baseUrl": ".", // <- sets the root directory
+    "paths": {
+      "@packages/*": ["packages/*"]
+    }
   }
 }
