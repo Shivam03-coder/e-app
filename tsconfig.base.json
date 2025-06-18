@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    // === Module & Target ===
     "target": "es2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "lib": ["es2022"],
     "customConditions": ["development"],
-
-    // === Output Control ===
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -15,16 +12,12 @@
     "noEmitOnError": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-
-    // === Strictness ===
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-
-    // === Module Aliases ===
-    "baseUrl": ".", // <- sets the root directory
+    "baseUrl": ".",
     "paths": {
       "@packages/*": ["packages/*"]
     }

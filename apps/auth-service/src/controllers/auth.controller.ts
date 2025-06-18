@@ -105,4 +105,37 @@ export class AuthController {
       );
     }
   );
+
+  public static refreshToken = AsyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const refreshToken = req.cookies.refreshToken;
+
+      if (!refreshToken) {
+        throw new AuthError('Refresh token is missing. Please log in again.');
+      }
+
+      await TokenUtils.decodeToken(res, refreshToken);
+
+      res
+        .status(200)
+        .json(new ApiResponse('Access token refreshed successfully.'));
+    }
+  );
+
+  public static userInfo = AsyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const user = req.user;
+
+      if (!user) {
+        throw new AuthError('Unauthorized access. User info not found.');
+      }
+
+      res.status(200).json(
+        new ApiResponse('User information fetched successfully', {
+          id: user.id,
+          role: user.role,
+        })
+      );
+    }
+  );
 }
