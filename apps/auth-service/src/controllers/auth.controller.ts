@@ -1,10 +1,15 @@
 import { Request, Response } from 'express';
 import { AuthValidation } from '../validations/auth.validation';
 import { ApiResponse, AsyncHandler } from '@packages/utils/api.utils';
-import { ValidationError } from '@packages/error-middleware/error-classes';
+import {
+  AuthError,
+  ValidationError,
+} from '@packages/error-middleware/error-classes';
 import { db } from '@packages/database';
 import OtpUtils from '../utils/otp.utils';
-import PassowrdUtils from '../utils/password.utils';
+import PasswordUtils from '../utils/password.utils';
+import TokenUtils from '../utils/token.utils';
+import CookiesUtils from '../utils/cookie.utils';
 
 export class AuthController {
   public static userRegistration = AsyncHandler(
@@ -39,7 +44,7 @@ export class AuthController {
         throw new ValidationError('User already exists with this email!');
 
       await OtpUtils.verifyOtp(email, otp);
-      const hashedPassword = await PassowrdUtils.hashPassword(password);
+      const hashedPassword = await PasswordUtils.hashPassword(password);
       const user = await db.users.create({
         data: {
           email,
@@ -48,6 +53,56 @@ export class AuthController {
         },
       });
       res.json(new ApiResponse('Account created succesfully', user));
+    }
+  );
+
+  public static loginUser = AsyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        throw new ValidationError('Email and password are required to log in.');
+      }
+
+      const existingUser = await db.users.findUnique({
+        where: { email },
+      });
+
+      if (!existingUser) {
+        throw new AuthError('No user found with the provided email address.');
+      }
+
+      const isPasswordMatching = await PasswordUtils.verifyPassword(
+        password,
+        existingUser.password
+      );
+
+      if (!isPasswordMatching) {
+        throw new AuthError('Incorrect password. Please try again.');
+      }
+
+      const { accessToken, refreshToken } = TokenUtils.generateTokens({
+        id: existingUser.id,
+        role: 'user',
+      });
+
+      CookiesUtils.setCookies(res, {
+        accessToken: {
+          value: accessToken,
+          days: 1,
+        },
+        refreshToken: {
+          value: refreshToken,
+          days: 7,
+        },
+      });
+
+      res.status(200).json(
+        new ApiResponse('Login successful. Welcome back!', {
+          userId: existingUser.id,
+          email: existingUser.email,
+        })
+      );
     }
   );
 }

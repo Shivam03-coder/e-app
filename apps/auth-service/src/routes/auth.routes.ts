@@ -6,6 +6,7 @@ const authRouter: ExpressRouter = Router();
 
 authRouter
   .post('/user-register', AuthController.userRegistration)
-  .post('/verify-otp', AuthController.verifyUserWithOtp);
+  .post('/verify-otp', AuthController.verifyUserWithOtp)
+  .post('/user-login', AuthController.loginUser);
 
 export default authRouter;

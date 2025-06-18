@@ -1,10 +1,8 @@
 import nodemailer, { Transporter } from 'nodemailer';
-import dotenv from 'dotenv';
 import ejs from 'ejs';
 import path from 'path';
 import fs from 'fs';
-
-dotenv.config();
+import { configs } from '@packages/configs';
 
 class NodemailerService {
   private static transporter: Transporter = nodemailer.createTransport({
@@ -13,8 +11,8 @@ class NodemailerService {
     port: 587,
     secure: false,
     auth: {
-      user: process.env.AUTH_EMAIL,
-      pass: process.env.AUTH_PASS,
+      user: configs.AUTH_EMAIL,
+      pass: configs.AUTH_PASS,
     },
   });
 
@@ -28,8 +26,7 @@ class NodemailerService {
     name: string;
   }): Promise<void> {
     try {
-
-      console.log(process.cwd())
+      console.log(process.cwd());
       // ✅ Fix template path relative to monorepo root
       const templatePath = path.join(
         process.cwd(),

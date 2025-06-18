@@ -1,6 +1,6 @@
 import argon2 from 'argon2';
 
-class PassowrdUtils {
+class PasswordUtils {
   public static hashPassword = async (password: string): Promise<string> => {
     return await argon2.hash(password, {
       type: argon2.argon2id,
@@ -15,4 +15,4 @@ class PassowrdUtils {
   };
 }
 
-export default PassowrdUtils;
+export default PasswordUtils;
