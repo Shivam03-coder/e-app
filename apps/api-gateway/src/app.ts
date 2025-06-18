@@ -30,7 +30,6 @@ class App {
     this.app = express();
     this.port = options?.port || 3530;
     this.initializeMiddlewares();
-    this.initializeRoutes();
   }
 
   private initializeMiddlewares(): void {
@@ -50,24 +49,20 @@ class App {
     this.app.use(cookieParser());
     this.app.enable('trust proxy');
     this.app.use(this.limiter);
-    this.app.use('/', proxy('http://localhost:4000'));
-  }
-
-  private initializeRoutes(): void {
     this.app.get('/health', (_req: Request, res: Response) => {
       res.status(200).json({
         status: 'healthy',
       });
     });
+    this.app.use('/', proxy('http://localhost:4000'));
   }
 
   public async listen(): Promise<void> {
     return new Promise((resolve) => {
       this.server = this.app.listen(this.port, () => {
         console.log(`
-🚀 Server launched successfully!
+🚀 Api gateway launched successfully!
 🔗 Local: http://localhost:${this.port}
-
 Health Check: http://localhost:${this.port}/health
         `);
         resolve();

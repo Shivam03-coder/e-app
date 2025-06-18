@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { Server } from 'http';
 import { errorMiddleware } from 'packages/error-middleware/error-middleware';
+import authRouter from './routes/auth.routes';
 
 interface AppOptions {
   port?: number;
@@ -37,6 +38,7 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
     this.app.use(cookieParser());
     this.app.use(errorMiddleware);
+    this.app.use('/api/auth', authRouter);
   }
 
   private initializeRoutes(): void {
@@ -53,8 +55,9 @@ class App {
     return new Promise((resolve) => {
       this.server = this.app.listen(this.port, () => {
         console.log(`
-🚀 Server launched successfully!
-        `);
+🚀 Auth Service launched successfully!
+📚 Swagger Docs available at: http://localhost:${this.port}/api-docs
+      `);
         resolve();
       });
     });

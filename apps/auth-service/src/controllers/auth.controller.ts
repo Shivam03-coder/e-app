@@ -6,12 +6,10 @@ import { ValidationError } from 'packages/error-middleware/error-classes';
 import AuthServices from '../services/auth.service';
 
 export class AuthController {
-  public static userRegisteration = AsyncHandler(
+  public static userRegistration = AsyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       AuthValidation.validateRegisterData(req.body, 'USER');
-
       const { name, email } = req.body;
-
       const existingUser = await db.users.findUnique({
         where: {
           email,
