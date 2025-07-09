@@ -11,6 +11,9 @@ importers:
       '@prisma/client':
         specifier: 6.9.0
         version: 6.9.0(prisma@6.9.0(typescript@5.8.3))(typescript@5.8.3)
+      '@tanstack/react-query':
+        specifier: ^5.81.5
+        version: 5.81.5(react@19.0.0)
       '@types/ejs':
         specifier: ^3.1.5
         version: 3.1.5
@@ -24,7 +27,7 @@ importers:
         specifier: ^0.43.0
         version: 0.43.0
       axios:
-        specifier: ^1.6.0
+        specifier: ^1.9.0
         version: 1.9.0
       body-parser:
         specifier: ^2.2.0
@@ -2520,6 +2523,14 @@ packages:
   '@szmarczak/http-timer@5.0.1':
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
+
+  '@tanstack/query-core@5.81.5':
+    resolution: {integrity: sha512-ZJOgCy/z2qpZXWaj/oxvodDx07XcQa9BF92c0oINjHkoqUPsmm3uG08HpTaviviZ/N9eP1f9CM7mKSEkIo7O1Q==}
+
+  '@tanstack/react-query@5.81.5':
+    resolution: {integrity: sha512-lOf2KqRRiYWpQT86eeeftAGnjuTR35myTP8MXyvHa81VlomoAWNEd8x5vkcAfQefu0qtYCvyqLropFZqgI2EQw==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -9513,6 +9524,13 @@ snapshots:
   '@szmarczak/http-timer@5.0.1':
     dependencies:
       defer-to-connect: 2.0.1
+
+  '@tanstack/query-core@5.81.5': {}
+
+  '@tanstack/react-query@5.81.5(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 5.81.5
+      react: 19.0.0
 
   '@tokenizer/token@0.3.0': {}
 
